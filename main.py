@@ -1,6 +1,5 @@
-file = open("test-data.txt")
+with open("test-data.txt", mode='rb') as file:
+    file_content = file.read()
 
-for line in file:
-    for char in line.strip():
-        char_bytes = bytes(char, "utf-8")
-        print(char_bytes.hex())
+for byte in file_content:
+    print(byte)
