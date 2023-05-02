@@ -19,3 +19,24 @@
 - Przetworzenie kanałem w Komm
 - Dekodowanie w Komm
 - Interpretacja stosownie do danych wejściowych
+
+
+## Run Locally
+
+Clone the project
+
+```bash
+  git clone https://github.com/SentiWW/niduc.git
+```
+
+Install requirement packages
+
+```bash
+  pip install -r requirements.txt
+```
+
+Run the code
+
+```bash
+  python main.py
+```
