@@ -30,7 +30,7 @@ class Simulation:
         """
         Method simulates sending message coded by self._code through self._channel
         :param message: message to be sent
-        :returns: sent message, number of errors and bit error rate
+        :returns: sent message, sent message length, number of errors and bit error rate
         """
         dim = self.code.dimension                               # code dimension - block length
 
@@ -51,8 +51,10 @@ class Simulation:
 
         out_msg = list(int(x) for x in decoded)[:len(decoded) - comp]   # unifying types and removing complementing
 
+        msg_len = len(coded) * self.code.length                         # counting sent message length
+        
         num_of_errors = sum(1 for i in range(len(message)) if message[i] != out_msg[i])     # counting number of errors
 
         ber = num_of_errors / len(message)                      # counting bit error rate
 
-        return out_msg, num_of_errors, ber
+        return out_msg, msg_len, num_of_errors, ber
