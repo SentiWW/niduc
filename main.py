@@ -1,6 +1,7 @@
 import komm
-
+import files
 from simulation import Simulation
+from generator import create_data
 
 
 sim = [ Simulation(komm.RepetitionCode(1), komm.BinarySymmetricChannel(0.01)),
@@ -16,7 +17,9 @@ sim = [ Simulation(komm.RepetitionCode(1), komm.BinarySymmetricChannel(0.01)),
         Simulation(komm.CyclicCode(length=15, generator_polynomial=0b10100110111), channels.GilbertModel(0.1, 0.01)),  # BCH
       ]
 
-msg = 
+
+create_data("temp.txt")
+msg = files.read_file("temp.txt")
 
 with open("wyniki.csv", "w") as f:
         f.write("code;channel;msg_len;sent_len;errors;ber\n")
