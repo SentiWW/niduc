@@ -42,7 +42,7 @@ class Simulation:
         coded = []
         for i in range(0, len(msg), dim):
             coded.append(self.code.encode(msg[i:i + dim]))      # block encoding of message
-
+        
         sent = [self.channel(x) for x in coded]                 # "sending" blocks through channel
 
         decoded = []
@@ -55,6 +55,6 @@ class Simulation:
         
         num_of_errors = sum(1 for i in range(len(message)) if message[i] != out_msg[i])     # counting number of errors
 
-        ber = num_of_errors / len(message)                      # counting bit error rate
+        bit_error_rate = num_of_errors / len(message)                      # counting bit error rate
 
-        return out_msg, msg_len, num_of_errors, ber
+        return out_msg, msg_len, num_of_errors, bit_error_rate

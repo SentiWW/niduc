@@ -80,3 +80,6 @@ class GilbertModel:
                     output.append((bit + 1) % 2)        # trick for bit negation without if
 
         return output
+    
+    def __str__(self):
+        return f"GilbertModel(good_to_bad_transition_probability={self._p_g2b}, bad_to_good_transition_probability={self._p_b2g})"
