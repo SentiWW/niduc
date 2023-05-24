@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
+import random
 
 def generate_report(file_name: str):
     # Read the CSV file
@@ -23,32 +24,50 @@ def generate_report(file_name: str):
     r1 = range(len(grouped_data))
     r2 = [x + bar_width for x in r1]
 
-    plt.bar(r1, grouped_data['Message length'], color='blue', width=bar_width, label='Message length')
-    plt.bar(r2, grouped_data['Sent message length'], color='orange', width=bar_width, label='Sent message length')
+    # plt.bar(r1, grouped_data['Message length'], color='blue', width=bar_width, label='Message length')
+    # plt.bar(r2, grouped_data['Sent message length'], color='orange', width=bar_width, label='Sent message length')
 
-    plt.title('Message Length vs Sent Message Length')
-    plt.xlabel('Code, Channel')
-    plt.ylabel('Length')
-    plt.xticks([r + bar_width / 2 for r in range(len(grouped_data))], grouped_data['Code & Channel'], rotation=90)
-    plt.legend()
-    plt.tight_layout()
-    plt.savefig('./data/message_length_vs_sent_message_length.png', bbox_inches='tight')
-    plt.clf()
+    # plt.title('Message Length vs Sent Message Length')
+    # plt.xlabel('Code, Channel')
+    # plt.ylabel('Length')
+    # plt.xticks([r + bar_width / 2 for r in range(len(grouped_data))], grouped_data['Code & Channel'], rotation=90)
+    # plt.legend()
+    # plt.tight_layout()
+    # plt.savefig('./data/message_length_vs_sent_message_length.png', bbox_inches='tight')
+    # plt.clf()
 
-    # Create a bar chart for the number of errors
-    plt.bar(grouped_data['Code & Channel'], grouped_data['Number of errors'], color='blue')
-    plt.title('Number of Errors')
-    plt.xlabel('Code, Channel')
-    plt.ylabel('Number of Errors')
-    plt.xticks(rotation=90)
-    plt.savefig("./data/number_of_errors.png", bbox_inches='tight');
-    plt.clf()
+    # # Create a bar chart for the number of errors
+    # plt.bar(grouped_data['Code & Channel'], grouped_data['Number of errors'], color='blue')
+    # plt.title('Number of Errors')
+    # plt.xlabel('Code, Channel')
+    # plt.ylabel('Number of Errors')
+    # plt.xticks(rotation=90)
+    # plt.savefig("./data/number_of_errors.png", bbox_inches='tight');
+    # plt.clf()
 
-    # Create a bar chart for the bit error rate
-    plt.bar(grouped_data['Code & Channel'], grouped_data['Bit error rate'], color='blue')
-    plt.title('Bit Error Rate')
-    plt.xlabel('Code, Channel')
-    plt.ylabel('Rate')
-    plt.xticks(rotation=90)
+    # # Create a bar chart for the bit error rate
+    # plt.bar(grouped_data['Code & Channel'], grouped_data['Bit error rate'], color='blue')
+    # plt.title('Bit Error Rate')
+    # plt.xlabel('Code, Channel')
+    # plt.ylabel('Rate')
+    # plt.xticks(rotation=90)
+    # plt.savefig("./data/bit_error_rate.png", bbox_inches='tight');
+    # plt.clf()
+
+    redundancy = []
+    for i in range(len(grouped_data['Message length'])):
+        redundancy.append(grouped_data['Sent message length'][i] / grouped_data['Message length'][i])
+
+    labels = grouped_data['Code & Channel']  # Use Code & Channel as the labels
+
+    for i in range(len(redundancy)):
+        color = '#' + ''.join(random.choices('0123456789ABCDEF', k=6))
+        plt.scatter(redundancy[i], grouped_data['Bit error rate'][i], color=color, label=labels[i])
+
+    plt.title('Bit Error Rate vs Redundancy')
+    plt.xlabel('Redundancy')
+    plt.ylabel('Bit error rate')
+    plt.legend(grouped_data['Code & Channel'])
+    plt.legend(loc='center left', bbox_to_anchor=(1, 0.5))
     plt.savefig("./data/bit_error_rate.png", bbox_inches='tight');
     plt.clf()
