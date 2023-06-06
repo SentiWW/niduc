@@ -1,7 +1,12 @@
 import os
+import string
+
 import pandas as pd
 import matplotlib.pyplot as plt
 import random
+
+plt.style.use('seaborn-v0_8-whitegrid')
+
 
 def generate_report(file_name: str):
     # Read the CSV file
@@ -26,7 +31,7 @@ def generate_report(file_name: str):
 
     # plt.bar(r1, grouped_data['Message length'], color='blue', width=bar_width, label='Message length')
     # plt.bar(r2, grouped_data['Sent message length'], color='orange', width=bar_width, label='Sent message length')
-
+    #
     # plt.title('Message Length vs Sent Message Length')
     # plt.xlabel('Code, Channel')
     # plt.ylabel('Length')
@@ -59,15 +64,15 @@ def generate_report(file_name: str):
         redundancy.append(grouped_data['Sent message length'][i] / grouped_data['Message length'][i])
 
     labels = grouped_data['Code & Channel']  # Use Code & Channel as the labels
+    plt.grid(color='gray', alpha=0.5, zorder=1)
 
     for i in range(len(redundancy)):
-        color = '#' + ''.join(random.choices('0123456789ABCDEF', k=6))
-        plt.scatter(redundancy[i], grouped_data['Bit error rate'][i], color=color, label=labels[i])
-
-    plt.title('Bit Error Rate vs Redundancy')
+        # color = '#' + ''.join(random.choices('0123456789ABCDEF', k=6))
+        plt.scatter(redundancy[i], grouped_data['Bit error rate'][i], label=labels[i])
+    plt.title('Bit Error Rate vs Redundancy - bad Gilbert model channel')
     plt.xlabel('Redundancy')
     plt.ylabel('Bit error rate')
     plt.legend(grouped_data['Code & Channel'])
-    plt.legend(loc='center left', bbox_to_anchor=(1, 0.5))
-    plt.savefig("./data/bit_error_rate.png", bbox_inches='tight');
+    plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.1), fancybox=True, shadow=True, ncol=1)
+    plt.savefig("./data/bit_error_rate.png", bbox_inches='tight')
     plt.clf()
